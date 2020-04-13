@@ -1,6 +1,6 @@
 package com.manugarcia010.weatherapp.framework.di
 import com.manugarcia010.weatherapp.App
-import com.manugarcia010.weatherapp.ui.WeekForecastActivity
+import com.manugarcia010.weatherapp.framework.di.viewmodel.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
@@ -10,6 +10,7 @@ import javax.inject.Singleton
 @Component(modules = [
     (AndroidSupportInjectionModule::class),
     (AppModule::class),
+    (ViewModelFactoryModule::class),
     (ActivitiesModule::class)/*,
     (WeatherModule::class)*/]
 )
