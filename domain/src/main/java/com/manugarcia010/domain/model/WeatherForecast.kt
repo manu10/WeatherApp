@@ -5,5 +5,5 @@ data class WeatherForecast (
     val city : City,
     val cod : Int,
     val cnt : Int,
-    val list : List<DailyWeather>
+    val list : List<DomainDailyWeather>
 )

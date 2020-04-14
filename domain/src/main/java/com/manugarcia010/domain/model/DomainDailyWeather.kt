@@ -1,6 +1,6 @@
 package com.manugarcia010.domain.model
 
-data class DailyWeather (
+data class DomainDailyWeather (
 
     val dt : Int,
     val sunrise : Int,

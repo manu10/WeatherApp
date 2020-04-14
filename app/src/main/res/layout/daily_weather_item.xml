@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="dailyWeather"
+            type="com.manugarcia010.weatherapp.ui.model.DailyWeather" />
+
+        <variable
+            name="dailyWeatherViewModel"
+            type="com.manugarcia010.weatherapp.ui.weekforecast.DailyWeatherViewModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/cardview_margin"
+        app:cardCornerRadius="@dimen/daily_weather_row_corner_radius">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/weatherImg"
+                android:layout_marginStart="@dimen/daily_weather_row_description_margin"
+                android:layout_width="@dimen/daily_weather_img_width"
+                android:layout_height="@dimen/daily_weather_img_height"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                />
+            <!--todo: app:src="@{dailyWeather.imageUrl}"-->
+
+            <TextView
+                app:layout_constraintTop_toTopOf="@id/weatherImg"
+                app:layout_constraintStart_toEndOf="@id/weatherImg"
+                android:layout_marginStart="@dimen/daily_weather_row_description_margin"
+                android:id="@+id/weatherTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{dailyWeather.weatherTitle}"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:text="Rain" />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/weatherTitle"
+                app:layout_constraintStart_toStartOf="@id/weatherTitle"
+                android:id="@+id/weatherDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/daily_weather_row_description_margin"
+                android:text="@{dailyWeather.weatherDescription}"
+                tools:text="heavy intensity rain" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="daily_weather_row_corner_radius">12dp</dimen>
+    <dimen name="cardview_margin">8dp</dimen>
+    <dimen name="daily_weather_row_description_margin">8dp</dimen>
+    <dimen name="daily_weather_img_height">40dp</dimen>
+    <dimen name="daily_weather_img_width">40dp</dimen>
+    <dimen name="weather_list_margin_t">16dp</dimen>
+</resources>
