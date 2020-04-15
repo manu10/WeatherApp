@@ -1,7 +1,6 @@
 package com.manugarcia010.weatherapp.ui.weekforecast
 
-import android.view.View
-import androidx.databinding.BindingAdapter
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.manugarcia010.domain.Response
@@ -20,11 +19,15 @@ class WeekForecastViewModel @Inject constructor (private val getWeatherForecastB
 
     private val compositeDisposable = CompositeDisposable()
     val dailyWeatherClickSubject = MutableLiveData<DomainDailyWeather>() //todo: use it to implement on item clicked
-    val loadingVisibility = MutableLiveData<Int>()
+    var isLoading : ObservableBoolean = ObservableBoolean(true)
     val errorMessage = MutableLiveData<String>()
     val weatherListAdapter = WeatherForecastAdapter()
 
     init {
+        loadWeatherData()
+    }
+
+    fun onRefresh() {
         loadWeatherData()
     }
 
@@ -46,11 +49,11 @@ class WeekForecastViewModel @Inject constructor (private val getWeatherForecastB
     }
 
     private fun showLoading() {
-        loadingVisibility.value = View.VISIBLE
+        isLoading.set(true)
     }
 
     private fun hideProgress() {
-        loadingVisibility.value = View.GONE
+        isLoading.set(false)
     }
 
     private fun onWeatherDataSuccess(response: Response.Success<WeatherForecast>) {

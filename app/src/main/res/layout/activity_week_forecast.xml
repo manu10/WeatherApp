@@ -13,16 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:mutableVisibility="@{viewmodel.loadingVisibility}"
-            />
-
         <TextView
             android:id="@+id/errorMessage"
             android:layout_width="wrap_content"
@@ -34,15 +24,23 @@
             app:mutableText="@{viewmodel.errorMessage}"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dailyWeatherList"
-            android:layout_width="0dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/weather_list_margin_t"
-            app:adapter="@{viewmodel.weatherListAdapter}"
+            app:onRefreshListener="@{() -> viewmodel.onRefresh()}"
+            app:refreshing="@{viewmodel.isLoading}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dailyWeatherList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/weather_list_margin_t"
+                tools:listitem="@layout/daily_weather_item"
+                app:adapter="@{viewmodel.weatherListAdapter}" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
