@@ -8,9 +8,11 @@ import com.manugarcia010.weatherapp.framework.service.WeatherDataAccessService
 import io.reactivex.Single
 
 class WeatherRemoteDataSourceImpl (private val weatherService: WeatherDataAccessService) : WeatherRemoteDataSource {
-    override fun getWeatherForecast(coord: Coord): Single<Response<WeatherForecast>> {
-      return weatherService.fetchWeatherForecast(coord.lat,coord.lon)
-            .map { Response.Success(it) as Response<WeatherForecast> }
-            .onErrorReturn { Response.Error(it) }
+    override suspend fun getWeatherForecast(coord: Coord): Response<WeatherForecast> {
+        return try {
+            Response.Success(weatherService.fetchWeatherForecast(coord.lat,coord.lon))
+        } catch (e: Exception){
+            Response.Error(e)
+        }
     }
 }

@@ -3,16 +3,15 @@ package com.manugarcia010.weatherapp.ui.weekforecast
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.manugarcia010.domain.Response
 import com.manugarcia010.domain.model.Coord
 import com.manugarcia010.domain.model.DomainDailyWeather
 import com.manugarcia010.domain.model.WeatherForecast
 import com.manugarcia010.usecases.GetWeatherForecastByCoord
 import com.manugarcia010.weatherapp.ui.model.toPresentationDailyWeather
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WeekForecastViewModel @Inject constructor (private val getWeatherForecastByCoord: GetWeatherForecastByCoord) : ViewModel() {
@@ -31,15 +30,12 @@ class WeekForecastViewModel @Inject constructor (private val getWeatherForecastB
         loadWeatherData()
     }
 
-    fun loadWeatherData() {
-        getWeatherForecastByCoord(Coord(-34.604122, -58.384281))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showLoading() }
-            .doAfterTerminate { hideProgress() }
-            .subscribe ({processWeatherDataResponse(it)},{})
-            .addTo(compositeDisposable)
-        }
+    fun loadWeatherData() = viewModelScope.launch {
+        showLoading()
+        val weekForecast =  getWeatherForecastByCoord(Coord(-34.604122, -58.384281))
+        hideProgress()
+        processWeatherDataResponse(weekForecast)
+    }
 
     private fun processWeatherDataResponse(response: Response<WeatherForecast>?) {
         when (response) {
@@ -50,6 +46,16 @@ class WeekForecastViewModel @Inject constructor (private val getWeatherForecastB
 
     private fun showLoading() {
         isLoading.set(true)
+        hideWeatherData()
+        hideErrorMessage()
+    }
+
+    private fun hideErrorMessage() {
+        errorMessage.value = null
+    }
+
+    private fun hideWeatherData() {
+        weatherListAdapter.dailyWeatherList = emptyList()
     }
 
     private fun hideProgress() {
