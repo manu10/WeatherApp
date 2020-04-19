@@ -1,14 +1,16 @@
 package com.manugarcia010.weatherapp.framework.di
 
+import com.manugarcia010.data.WeatherPersistenceDataSource
 import com.manugarcia010.data.WeatherRemoteDataSource
 import com.manugarcia010.data.WeatherRepository
 import com.manugarcia010.usecases.GetWeatherForecastByCoord
-import com.manugarcia010.weatherapp.framework.WeatherRemoteDataSourceImpl
+import com.manugarcia010.weatherapp.framework.datasource.WeatherPersistenceDataSourceImpl
+import com.manugarcia010.weatherapp.framework.datasource.WeatherRemoteDataSourceImpl
+import com.manugarcia010.weatherapp.framework.datasource.database.WeatherForecastDao
 import com.manugarcia010.weatherapp.framework.service.WeatherDataAccessService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
 @Module
 class WeatherModule {
@@ -23,8 +25,12 @@ class WeatherModule {
             = WeatherRemoteDataSourceImpl(weatherDataAccessService)
 
     @Provides
-    fun provideWeatherRepository(weatherRemoteDataSource: WeatherRemoteDataSource): WeatherRepository
-            = WeatherRepository(weatherRemoteDataSource)
+    fun provideWeatherPersistenceDataSource(weatherForecastDao: WeatherForecastDao): WeatherPersistenceDataSource
+            = WeatherPersistenceDataSourceImpl(weatherForecastDao)
+
+    @Provides
+    fun provideWeatherRepository(weatherPersistenceDataSource: WeatherPersistenceDataSource, weatherRemoteDataSource: WeatherRemoteDataSource): WeatherRepository
+            = WeatherRepository(weatherPersistenceDataSource, weatherRemoteDataSource)
 
     @Provides
     fun provideGetWeatherForecastByCoord(weatherRepository: WeatherRepository): GetWeatherForecastByCoord

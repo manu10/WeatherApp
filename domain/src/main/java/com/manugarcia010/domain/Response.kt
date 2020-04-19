@@ -1,7 +1,7 @@
 package com.manugarcia010.domain
 
 sealed class Response<out T> {
-    class Success<out T>(val data: T) : Response<T>()
+    data class Success<out T>(val data: T, val freshData: Boolean = true) : Response<T>()
 
     class Error(val exception: Throwable) : Response<Nothing>()
 }

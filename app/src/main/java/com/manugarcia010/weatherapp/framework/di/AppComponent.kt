@@ -1,5 +1,6 @@
 package com.manugarcia010.weatherapp.framework.di
 import com.manugarcia010.weatherapp.App
+import com.manugarcia010.weatherapp.framework.datasource.database.WeatherDataBase
 import com.manugarcia010.weatherapp.framework.di.viewmodel.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
@@ -19,6 +20,8 @@ interface AppComponent {
     interface Builder {
         @BindsInstance
         fun application(app: App): Builder
+        @BindsInstance
+        fun database(db: WeatherDataBase): Builder
         fun build(): AppComponent
     }
     fun inject(app: App)

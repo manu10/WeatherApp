@@ -1,4 +1,4 @@
-package com.manugarcia010.weatherapp.framework
+package com.manugarcia010.weatherapp.framework.datasource
 
 import com.manugarcia010.data.WeatherRemoteDataSource
 import com.manugarcia010.domain.Response

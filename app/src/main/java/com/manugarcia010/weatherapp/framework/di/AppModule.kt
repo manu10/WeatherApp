@@ -3,6 +3,8 @@ package com.manugarcia010.weatherapp.framework.di
 import android.content.Context
 import com.manugarcia010.weatherapp.App
 import com.manugarcia010.weatherapp.BuildConfig
+import com.manugarcia010.weatherapp.framework.datasource.database.WeatherDataBase
+import com.manugarcia010.weatherapp.framework.datasource.database.WeatherForecastDao
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -51,6 +53,12 @@ open class AppModule(){
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .client(okHttpClient)
                 .build()
+    }
+
+    @Singleton
+    @Provides
+    open fun providesWeatherForecastDao(weatherDataBase: WeatherDataBase): WeatherForecastDao {
+        return weatherDataBase.getWeatherForecastDao()
     }
 
 }

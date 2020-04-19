@@ -2,6 +2,8 @@ package com.manugarcia010.weatherapp
 
 import android.app.Activity
 import android.app.Application
+import androidx.room.Room
+import com.manugarcia010.weatherapp.framework.datasource.database.WeatherDataBase
 import com.manugarcia010.weatherapp.framework.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -14,9 +16,14 @@ open class App : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        val db = Room.databaseBuilder<WeatherDataBase>(
+            applicationContext,
+            WeatherDataBase::class.java, BuildConfig.DATABASE
+        ).build()
         DaggerAppComponent
             .builder()
             .application(this)
+            .database(db)
             .build()
             .inject(this)
     }
