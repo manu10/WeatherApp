@@ -1,12 +1,15 @@
 package com.manugarcia010.weatherapp.ui
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.manugarcia010.weatherapp.R
 import com.manugarcia010.weatherapp.ui.extensions.parentActivity
 
 
@@ -34,10 +37,9 @@ fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
     }
 }
 
-//@BindingAdapter("src") //todo:  add if necessary
-//fun setImageUrl(view: ImageView, url: String?) {
-//    Glide.with(view.context)
-//        .load(url)
-//        .placeholder(R.mipmap.placeholder)
-//        .into(view)
-//}
+@BindingAdapter("android:src")
+fun setImageUrl(view: ImageView, url: String?) {
+    Glide.with(view.context)
+        .load(url)
+        .into(view)
+}

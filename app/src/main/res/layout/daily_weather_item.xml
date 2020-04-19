@@ -34,9 +34,7 @@
                 android:layout_width="@dimen/daily_weather_img_width"
                 android:layout_height="@dimen/daily_weather_img_height"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
-                />
-            <!--todo: app:src="@{dailyWeather.imageUrl}"-->
+                android:src="@{dailyWeather.imageUrl}" />
 
             <TextView
                 app:layout_constraintTop_toTopOf="@id/weatherImg"

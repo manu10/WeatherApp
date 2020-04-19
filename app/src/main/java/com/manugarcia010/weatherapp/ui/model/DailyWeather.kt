@@ -10,4 +10,4 @@ data class DailyWeather(
     val imageUrl: String)
 
 fun DomainDailyWeather.toPresentationDailyWeather() =
-    DailyWeather(DateTime(dt*1000L), weather.first().main, weather.first().description, "example" ) //fixme imageUrl
+    DailyWeather(DateTime(dt*1000L), weather.first().main, weather.first().description, "http://openweathermap.org/img/wn/${weather.first().icon}.png" )
