@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
     compileSdkVersion 29
@@ -17,6 +19,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "SERVER_URL", '"http://api.openweathermap.org/data/2.5/"'
+        buildConfigField "String", "API_KEY", localProperties['apiKey']
         buildConfigField "String", "DATABASE", '"weather-db"'
     }
 
