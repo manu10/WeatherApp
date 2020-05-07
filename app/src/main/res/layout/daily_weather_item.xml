@@ -11,7 +11,7 @@
 
         <variable
             name="dailyWeatherViewModel"
-            type="com.manugarcia010.weatherapp.ui.weekforecast.DailyWeatherViewModel" />
+            type="com.manugarcia010.weatherapp.ui.weekforecast.WeekForecastViewModel" />
 
     </data>
 
@@ -33,6 +33,7 @@
                 android:layout_marginStart="@dimen/daily_weather_row_description_margin"
                 android:layout_width="@dimen/daily_weather_img_width"
                 android:layout_height="@dimen/daily_weather_img_height"
+                android:contentDescription="@string/weather_image"
                 android:scaleType="centerCrop"
                 android:src="@{dailyWeather.imageUrl}" />
 

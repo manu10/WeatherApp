@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:onRefreshListener="@{() -> viewmodel.onRefresh()}"
-            app:refreshing="@{viewmodel.isLoading}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:refreshing="@{viewmodel.dataLoading ? true : false}"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -39,8 +39,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/weather_list_margin_t"
+                android:visibility="visible"
                 tools:listitem="@layout/daily_weather_item"
-                app:adapter="@{viewmodel.weatherListAdapter}" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:items="@{viewmodel.items}" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

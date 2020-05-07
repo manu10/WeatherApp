@@ -1,5 +1,6 @@
 package com.manugarcia010.weatherapp.framework.di
 
+import com.manugarcia010.data.DefaultWeatherRepository
 import com.manugarcia010.data.WeatherPersistenceDataSource
 import com.manugarcia010.data.WeatherRemoteDataSource
 import com.manugarcia010.data.WeatherRepository
@@ -30,7 +31,7 @@ class WeatherModule {
 
     @Provides
     fun provideWeatherRepository(weatherPersistenceDataSource: WeatherPersistenceDataSource, weatherRemoteDataSource: WeatherRemoteDataSource): WeatherRepository
-            = WeatherRepository(weatherPersistenceDataSource, weatherRemoteDataSource)
+            = DefaultWeatherRepository(weatherPersistenceDataSource, weatherRemoteDataSource)
 
     @Provides
     fun provideGetWeatherForecastByCoord(weatherRepository: WeatherRepository): GetWeatherForecastByCoord

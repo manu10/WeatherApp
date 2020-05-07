@@ -9,14 +9,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.manugarcia010.weatherapp.R
 import com.manugarcia010.weatherapp.ui.extensions.parentActivity
+import com.manugarcia010.weatherapp.ui.model.DailyWeather
+import com.manugarcia010.weatherapp.ui.weekforecast.WeatherForecastAdapter
 
 
-/* DataBinding adapters for across the app */
-@BindingAdapter("adapter")
-fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
-    view.adapter = adapter
+@BindingAdapter("app:items")
+fun setItems(listView: RecyclerView, items: List<DailyWeather>) {
+    (listView.adapter as WeatherForecastAdapter).submitList(items)
 }
 
 @BindingAdapter("mutableVisibility")
