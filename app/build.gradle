@@ -23,6 +23,17 @@ android {
         buildConfigField "String", "DATABASE", '"weather-db"'
     }
 
+    android {
+        sourceSets {
+            String sharedTestDir = 'src/sharedTest/java'
+            test {
+                java.srcDir sharedTestDir
+            }
+            androidTest {
+                java.srcDir sharedTestDir
+            }
+        }
+    }
     dataBinding {
         enabled = true
     }
@@ -57,11 +68,6 @@ dependencies {
 
     // Data binding
     kapt "com.android.databinding:compiler:3.1.4"
-
-    // Testing
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Dagger 2 and Compiler
     kapt 'com.google.dagger:dagger-compiler:2.16'
@@ -98,4 +104,15 @@ dependencies {
 
     // Joda (time handlig)
     implementation 'net.danlew:android.joda:2.10.3'
+
+    // Dependencies for local unit tests
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    testImplementation "com.google.truth:truth:$truthVersion"
+
+    // Instrumented testing
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
