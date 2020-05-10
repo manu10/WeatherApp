@@ -32,11 +32,13 @@ class WeekForecastViewModel @Inject constructor (private val getWeatherForecastB
         loadWeatherData()
     }
 
-    fun loadWeatherData() = viewModelScope.launch {
+    fun loadWeatherData() {
         showLoading()
-        val weekForecast =  getWeatherForecastByCoord(Coord(-34.604122, -58.384281))
-        hideProgress()
-        processWeatherDataResponse(weekForecast)
+        viewModelScope.launch {
+            val weekForecast =  getWeatherForecastByCoord(Coord(-34.604122, -58.384281))
+            hideProgress()
+            processWeatherDataResponse(weekForecast)
+        }
     }
 
     private fun processWeatherDataResponse(response: Response<WeatherForecast>?) {
