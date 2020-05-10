@@ -5,13 +5,13 @@ import com.google.common.truth.Truth.assertThat
 import com.manugarcia010.usecases.GetWeatherForecastByCoord
 import com.manugarcia010.weatherapp.LiveDataTestUtil
 import com.manugarcia010.weatherapp.MainCoroutineRule
-import com.manugarcia010.weatherapp.R
 import com.manugarcia010.weatherapp.data.FakeWeatherRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class WeekForecastViewModelTest {
 
     private lateinit var weatherRepository: FakeWeatherRepository
@@ -36,12 +36,13 @@ class WeekForecastViewModelTest {
         )
     }
 
+    //Since the example is so simple, the test deos not make much sense, but it's just an example
     @Test
-    fun loadTasks_success() {
+    fun loadWeatherData_success() {
         // Make the repository return errors
         weatherRepository.setReturnError(false)
 
-        // Load tasks
+        // Load weather data
         viewModel.loadWeatherData()
 
         // Then progress indicator is hidden
@@ -52,11 +53,11 @@ class WeekForecastViewModelTest {
     }
 
     @Test
-    fun loadTasks_error() {
+    fun loadWeatherData_error() {
         // Make the repository return errors
         weatherRepository.setReturnError(true)
 
-        // Load tasks
+        // Load data
         viewModel.loadWeatherData()
 
         // Then progress indicator is hidden
@@ -66,5 +67,28 @@ class WeekForecastViewModelTest {
         assertThat(LiveDataTestUtil.getValue(viewModel.items)).isEmpty()
 
         // todo: using TDD improve the error handling
+    }
+
+    @Test
+    fun loadWeatherDataFromRepository_loadingTogglesAndDataLoaded() {
+        // Pause dispatcher so we can verify initial values
+        mainCoroutineRule.pauseDispatcher()
+
+        // Given an initialized TasksViewModel with initialized weather data
+        // When data is requested
+        // Trigger loading of tasks
+        viewModel.loadWeatherData()
+
+        // Then progress indicator is shown
+        assertThat(LiveDataTestUtil.getValue(viewModel.dataLoading)).isTrue()
+
+        // Execute pending coroutines actions
+        mainCoroutineRule.resumeDispatcher()
+
+        // Then progress indicator is hidden
+        assertThat(LiveDataTestUtil.getValue(viewModel.dataLoading)).isFalse()
+
+        // And data correctly loaded
+        assertThat(LiveDataTestUtil.getValue(viewModel.items)).isNotNull()
     }
 }
